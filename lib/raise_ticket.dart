@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:io';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,11 +7,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recursionhelpdesksystem/backendticket.dart';
 import 'package:recursionhelpdesksystem/controllers.dart';
 import 'package:recursionhelpdesksystem/filepixk.dart';
+import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/main.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
 
@@ -25,6 +28,7 @@ class _TicketsState extends State<Tickets> {
   final _formKey = GlobalKey<FormState>();
   String dropdownValue = "Ask for Quote";
   String dropdownValue1 = "Low";
+  bool priority = false;
   final TextEditingController _email = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -42,9 +46,8 @@ class _TicketsState extends State<Tickets> {
                 text: const TextSpan(
                   text: "Ticket",
                   style: TextStyle(
-                    fontFamily: 'ProductSansBold',
-                    fontSize: 28,
-                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Bold',
+                    fontSize: 36,
                     color: Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
@@ -71,12 +74,13 @@ class _TicketsState extends State<Tickets> {
                     Name.text,
                     dropdownValue.toString(),
                     Subject.text,
-                    dropdownValue1.toString(),
+                    priority,
+                    //dropdownValue1.toString(),
                     _email.text,
                     time.text);
                 if (_formKey.currentState!.validate()) {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Home()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => HelpDeskAdmin()));
                   print('All validations passed!');
                 }
               },
@@ -164,9 +168,58 @@ class _TicketsState extends State<Tickets> {
               SizedBox(
                 height: height * 0.02,
               ),
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(40)),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Icon(
+                          Iconsax.profile_2user,
+                          color: Colors.grey.shade400,
+                        )),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        //width: getWidth(context) * 0.1,
+                        child: Text(
+                          FirebaseAuth.instance.currentUser!.displayName!
+                              .toString(),
+                          style: TextStyle(
+                            fontFamily: 'Bold',
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        //width: getWidth(context) * 0.1,
+                        child: Text(
+                          FirebaseAuth.instance.currentUser!.email!.toString(),
+                          style: TextStyle(
+                            fontFamily: 'Medium',
+                            fontSize: 12,
+                            color: Colors.black.withOpacity(0.4),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
 
 //Name
-              Padding(
+              /*Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
@@ -274,7 +327,7 @@ class _TicketsState extends State<Tickets> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
 
 //Subject
               Padding(
@@ -385,7 +438,7 @@ class _TicketsState extends State<Tickets> {
               ),
 
 //Attachment
-              Padding(
+              /*Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                       constraints: BoxConstraints(
@@ -459,13 +512,13 @@ class _TicketsState extends State<Tickets> {
                       //     print('To Path: ${newFile.path}');
                       //   },
                       // ),
-                      )),
+                      )),*/
               SizedBox(
                 height: height * 0.02,
               ),
 
 //time
-              Padding(
+              /*Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
@@ -516,52 +569,86 @@ class _TicketsState extends State<Tickets> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
               SizedBox(
                 height: height * 0.02,
               ),
 
 //Priority
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RichText(
-                      text: const TextSpan(
-                          text: "Priority",
-                          style: TextStyle(
-                            fontFamily: 'ProductSans',
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          )),
-                    ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                /*Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RichText(
+                    text: const TextSpan(
+                        text: "Priority",
+                        style: TextStyle(
+                          fontFamily: 'ProductSans',
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        )),
                   ),
-                  Padding(
+                ),*/
+                Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton<String>(
-                      value: dropdownValue1,
-                      elevation: 16,
-                      dropdownColor: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(18.0),
-                      style:
-                          const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue1 = newValue!;
-                        });
-                      },
-                      items: <String>['High', 'Medium', 'Low']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 24,
+                          width: 24,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  width: 1)),
+                          child: Transform.scale(
+                            scale: 0.9,
+                            child: Checkbox(
+                                side: BorderSide.none,
+                                checkColor: Colors.lightBlue,
+                                shape: CircleBorder(),
+                                activeColor: Colors.lightBlue,
+                                value: priority,
+                                onChanged: (value) {
+                                  setState(() {
+                                    priority = value!;
+                                  });
+                                }),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          'Set high priority',
+                          style: TextStyle(fontFamily: 'Medium', fontSize: 16),
+                        )
+                      ],
+                    ))
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: DropdownButton<String>(
+                //         value: dropdownValue1,
+                //         elevation: 16,
+                //         dropdownColor: Colors.grey[300],
+                //         borderRadius: BorderRadius.circular(18.0),
+                //         style:
+                //             const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                //         onChanged: (String? newValue) {
+                //           setState(() {
+                //             dropdownValue1 = newValue!;
+                //           });
+                //         },
+                //         items: <String>['High', 'Low']
+                //             .map<DropdownMenuItem<String>>((String value) {
+                //           return DropdownMenuItem<String>(
+                //             value: value,
+                //             child: Text(value),
+                //           );
+                //         }).toList(),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+              ]),
               SizedBox(
                 height: height * 0.02,
               ),

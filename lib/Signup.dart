@@ -10,8 +10,9 @@ import 'package:recursionhelpdesksystem/Register.dart';
 import 'package:recursionhelpdesksystem/authenticate.dart';
 import 'package:recursionhelpdesksystem/backendtickets.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
+import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
-import 'package:recursionhelpdesksystem/ticket.dart';
+import 'package:recursionhelpdesksystem/raise_ticket.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -131,7 +132,7 @@ class _SignUpState extends State<SignUp> {
                                 hintText: "Name"),
                             onChanged: (value) {
                               setState(() {
-                                value != '' ? passOpacity = 1 : passOpacity = 0;
+                                value != '' ? nameOpacity = 1 : nameOpacity = 0;
                               });
                             },
                             onFieldSubmitted: (value) {
@@ -216,7 +217,7 @@ class _SignUpState extends State<SignUp> {
                               dropdownvalueite = newvalue!;
                               position = dropdownvalueite;
                             });
-                            hierarchy(dropdownvalueite);
+                            //hierarchy(dropdownvalueite);
                           },
                         ),
                       ],
@@ -257,24 +258,27 @@ class _SignUpState extends State<SignUp> {
                                       setState(() {
                                         isLoading = false;
                                       });
+                                      await FirebaseAuth.instance.currentUser!
+                                          .updateDisplayName(
+                                              nameController.text);
                                       role == 'Employee'
                                           ? Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Register(),
+                                                builder: (context) => Tickets(),
                                               ))
                                           : Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => Tickets(),
+                                                builder: (context) =>
+                                                    HelpDeskAdmin(),
                                               ));
                                       Map<String, dynamic> user = {
                                         "position": position,
                                         'role': role,
                                         'email': email.text,
                                         'password': password.text,
-                                        'name': nameController,
+                                        'name': nameController.text,
                                         'uid': FirebaseAuth
                                             .instance.currentUser!.uid
                                       };

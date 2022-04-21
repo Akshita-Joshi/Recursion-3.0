@@ -11,7 +11,7 @@ class Ticket extends StatefulWidget {
   String? profile;
   String? status;
   String? dept;
-  String? priority;
+  bool? priority;
 
   Ticket(
       {this.name,
@@ -230,7 +230,7 @@ class _TicketState extends State<Ticket> {
                   SizedBox(
                     width: 12,
                   ),
-                  widget.priority == 'High'
+                  widget.priority!
                       ? Container(
                           decoration: BoxDecoration(
                               color: Colors.red,
@@ -238,7 +238,7 @@ class _TicketState extends State<Ticket> {
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
-                              widget.priority!,
+                              'High',
                               style: TextStyle(
                                   fontFamily: 'Bold',
                                   fontSize: 18,

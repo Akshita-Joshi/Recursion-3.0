@@ -20,16 +20,19 @@ class _HomeState extends State<Home> {
               itemBuilder: (ctx, i) {
                 Map<String, dynamic> map =
                     snapshot.data!.docs[i].data() as Map<String, dynamic>;
-                return Ticket(
-                  name: map['name'],
-                  profile: map['profile'],
-                  status: map['status'],
-                  email: map['email'],
-                  message: map['message'],
-                  priority: map['priority'],
-                  subject: map['subject'],
-                  attachment: map['attachment'],
-                  //time: map['time'],
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 18.0),
+                  child: Ticket(
+                    name: map['name'],
+                    profile: map['profile'],
+                    status: map['status'],
+                    email: map['email'],
+                    message: map['message'],
+                    priority: map['priority'],
+                    subject: map['subject'],
+                    attachment: map['attachment'],
+                    //time: map['time'],
+                  ),
                 );
               });
         });
