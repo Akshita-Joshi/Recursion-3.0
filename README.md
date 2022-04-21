@@ -14,3 +14,34 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+------------------------
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA9di8b37ur13Q4kATLvskxZmsrNoemtLg",
+    authDomain: "recursion-5dd66.firebaseapp.com",
+    projectId: "recursion-5dd66",
+    storageBucket: "recursion-5dd66.appspot.com",
+    messagingSenderId: "755601590737",
+    appId: "1:755601590737:web:8d3787aa243e6517bd78f0",
+    measurementId: "G-6K2FYFTF4P"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+
+-----------------------------
+npm install -g firebase-tools
+---------------
+<img width="510" alt="image" src="https://user-images.githubusercontent.com/65798586/164411390-fbe0164b-e1d9-471c-a154-d71a5af4fca8.png">
