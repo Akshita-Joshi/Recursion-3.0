@@ -84,6 +84,7 @@ void addUserData() async {
     Map<String, dynamic> userData = {
       'email': email.text,
       "name": nameController.text,
+      "position":position,
       'role': "Employee",
       'degree': degree,
       'uid': FirebaseAuth.instance.currentUser!.uid,
@@ -107,6 +108,8 @@ void helpdesk() async {
       'email': email.text,
       "name": nameControllerT.text,
       'role': "Helpdesk",
+      "position": position,
+      
       'degree':degree,
       'uid': _auth.currentUser!.uid
     };

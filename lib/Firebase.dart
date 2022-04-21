@@ -4,9 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
 
 void getUser() async {
-  FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) {
+  FirebaseFirestore.instance
+      .collection("Users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .get()
+      .then((value) {
     print(value.data());
     print(value.data()!['name']);
     currentUser = value.data()!['name'];
   });
 }
+
+

@@ -10,8 +10,10 @@ class Welcome extends StatefulWidget {
   @override
   _WelcomeState createState() => _WelcomeState();
 }
+const String CAPTCHA_SITE_KEY = "6Lf9aY4fAAAAAJ8LafezMcqlNX4wCLzOqWACcQ3A";
 
 class _WelcomeState extends State<Welcome> {
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -112,10 +114,15 @@ class _WelcomeState extends State<Welcome> {
                       ),
                     ],
                   )
+                
+                
                 ],
+
               ),
             ),
           )
+          ,
+          
         ],
       )),
     );

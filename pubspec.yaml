@@ -41,7 +41,7 @@ dependencies:
   fluttertoast: ^8.0.9
   firebase_auth:
   permission_handler: ^8.1.1
-
+  g_captcha: ^1.0.0
   image_picker: ^0.8.1+1
   flutter_svg: ^1.0.3
 dev_dependencies:

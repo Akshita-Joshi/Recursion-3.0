@@ -8,6 +8,7 @@ import 'package:recursionhelpdesksystem/HelpDeskLogin.dart';
 import 'package:recursionhelpdesksystem/Loader.dart';
 import 'package:recursionhelpdesksystem/Register.dart';
 import 'package:recursionhelpdesksystem/authenticate.dart';
+import 'package:recursionhelpdesksystem/backendtickets.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
 
@@ -17,6 +18,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String dropdownvalueite = "Computer Science Enginner";
+  var items = [
+    "Clerk",
+    "Computer Science Enginner",
+    "Manager",
+    "Tech Lead",
+    "CEO"
+  ];
   bool isLoading = false;
   double emailOpacity = 0.0;
   double passOpacity = 0.0;
@@ -157,7 +166,29 @@ class _SignUpState extends State<SignUp> {
                             },
                             //300
                           ),
-                        )
+                        ),
+                        DropdownButton(
+                          value: dropdownvalueite,
+
+                          // Down Arrow Icon
+                          icon: const Icon(Icons.keyboard_arrow_down),
+
+                          // Array list of items
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          onChanged: (String? newvalue) {
+                            setState(() {
+                              dropdownvalueite = newvalue!;
+                              position = dropdownvalueite;
+                            
+                            });
+                              hierarchy(dropdownvalueite);
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -208,6 +239,7 @@ class _SignUpState extends State<SignUp> {
                                                 builder: (context) => Home(),
                                               ));
                                       Map<String, dynamic> user = {
+                                        "position":position,
                                         'role': role,
                                         'email': email.text,
                                         'password': password.text
