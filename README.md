@@ -39,3 +39,7 @@ samples, guidance on mobile development, and a full API reference.
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
+
+
+-----------------------------
+npm install -g firebase-tools
