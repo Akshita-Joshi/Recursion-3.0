@@ -123,18 +123,107 @@ class _TicketState extends State<Ticket> {
               ),
               Row(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: primary,
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        widget.status!,
-                        style: TextStyle(
-                            fontFamily: 'Bold',
-                            fontSize: 18,
-                            color: Colors.black),
+                  InkWell(
+                    onTap: () {
+                      AlertDialog alert = AlertDialog(
+                        content: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'Take Action',
+                                    style: TextStyle(
+                                      fontFamily: "Bold",
+                                      fontSize: 26,
+                                      color: Colors.black.withOpacity(0.2),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: primary,
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(18.0),
+                                        child: Text(
+                                          "Mark as solved",
+                                          style: TextStyle(
+                                            fontFamily: "Bold",
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.8),
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(18.0),
+                                        child: Text(
+                                          "Transfer to next level",
+                                          style: TextStyle(
+                                            fontFamily: "Bold",
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+
+                      // show the dialog
+                      showDialog(
+                        barrierColor: Colors.black38,
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alert;
+                        },
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          widget.status!,
+                          style: TextStyle(
+                              fontFamily: 'Bold',
+                              fontSize: 18,
+                              color: Colors.black),
+                        ),
                       ),
                     ),
                   ),

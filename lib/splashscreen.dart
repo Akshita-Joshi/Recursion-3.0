@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
 import 'package:recursionhelpdesksystem/Welcome.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
+import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -74,10 +75,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigationPageloggedIn() {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) {
-      if (role == 'employee') {
+      if (role == 'Employee') {
         return EmployeeScreen();
       } else {
-        return Home();
+        return HelpDeskAdmin();
       }
     }));
   }

@@ -171,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                       ? Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(40),
-                              color: Colors.grey.shade100),
+                              color: Colors.black.withOpacity(0.8)),
                           child: Padding(
                             padding: const EdgeInsets.all(14.0),
                             child: InkWell(

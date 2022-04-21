@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
+import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
 import 'Loader.dart';
 import 'authenticate.dart';
@@ -181,7 +182,7 @@ class _LoginState extends State<Login> {
                     ? Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
-                            color: Colors.grey.shade100),
+                            color: Colors.black.withOpacity(0.8)),
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: InkWell(
@@ -249,7 +250,8 @@ class _LoginState extends State<Login> {
                                         : Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (_) => Home()));
+                                                builder: (_) =>
+                                                    HelpDeskAdmin()));
                                     setState(() {
                                       isLoading = false;
                                     });
