@@ -11,6 +11,7 @@ import 'package:recursionhelpdesksystem/authenticate.dart';
 import 'package:recursionhelpdesksystem/backendtickets.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
+import 'package:recursionhelpdesksystem/ticket.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -266,7 +267,7 @@ class _SignUpState extends State<SignUp> {
                                           : Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => Home(),
+                                                builder: (context) => Tickets(),
                                               ));
                                       Map<String, dynamic> user = {
                                         "position": position,
