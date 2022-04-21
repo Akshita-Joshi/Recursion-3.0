@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         title: "HelpDesk",
         builder: (BuildContext context, Widget? widget) {
           ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
