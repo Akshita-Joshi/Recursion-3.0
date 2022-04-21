@@ -1,14 +1,18 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
+
+import 'package:permission_handler/permission_handler.dart';
 import 'package:recursionhelpdesksystem/backendticket.dart';
 import 'package:recursionhelpdesksystem/controllers.dart';
 import 'package:recursionhelpdesksystem/filepixk.dart';
 import 'package:recursionhelpdesksystem/main.dart';
+import 'package:recursionhelpdesksystem/screens/home.dart';
 
 class Tickets extends StatefulWidget {
   const Tickets({Key? key}) : super(key: key);
@@ -72,7 +76,7 @@ class _TicketsState extends State<Tickets> {
                     time.text);
                 if (_formKey.currentState!.validate()) {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => MyHomePage()));
+                      context, MaterialPageRoute(builder: (_) => Home()));
                   print('All validations passed!');
                 }
               },
@@ -387,7 +391,54 @@ class _TicketsState extends State<Tickets> {
                       constraints: BoxConstraints(
                         minWidth: 400,
                       ),
-                      child: FileUploadButton()
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Future<void> addSubmission() async {
+                            final _storage = FirebaseStorage.instance;
+
+                            await Permission.storage.request();
+                            var permissionStatus =
+                                await Permission.storage.status;
+                            if (permissionStatus.isGranted) {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['pdf', 'doc'],
+                              );
+                              PlatformFile pdf;
+                              var fileName =
+                                  result!.paths.toString().split('/').last;
+                              if (result != null) {
+                                setState(() {
+                                  var submitting = true;
+                                });
+                                var snapshot = await _storage
+                                    .ref()
+                                    .child(
+                                        '$fileName-${FirebaseAuth.instance.currentUser!.uid}')
+                                    .putFile(File(result.files.first.path!));
+                                var downloadUrl =
+                                    await snapshot.ref.getDownloadURL();
+                                Map<String, dynamic> map = {
+                                  'uid': FirebaseAuth.instance.currentUser!.uid,
+                                  'file': downloadUrl.toString(),
+                                  'filename': fileName.toString()
+                                };
+                                try {
+                                  await FirebaseFirestore.instance
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .set(map);
+                                  setState(() {});
+                                } catch (e) {
+                                  setState(() {});
+                                }
+                              }
+                            }
+                          }
+                        },
+                        child: null,
+                      )
                       // ElevatedButton(
                       //   child: Text("Pick File Attachment"),
                       //   onPressed: () async {
@@ -517,16 +568,5 @@ class _TicketsState extends State<Tickets> {
             ]),
       ),
     );
-  }
-
-  Future<File> saveFilePermanently(PlatformFile file) async {
-    final appStorage = await getApplicationDocumentsDirectory();
-    final newFile = File('${appStorage.path}/${file.name}');
-
-    return File(file.path!).copy(newFile.path);
-  }
-
-  void openFile(PlatformFile file) {
-    OpenFile.open(file.path!);
   }
 }
