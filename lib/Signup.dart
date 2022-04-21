@@ -29,6 +29,7 @@ class _SignUpState extends State<SignUp> {
   bool isLoading = false;
   double emailOpacity = 0.0;
   double passOpacity = 0.0;
+  double nameOpacity = 0.0;
 
   static TextStyle _hintText() {
     return TextStyle(
@@ -113,6 +114,32 @@ class _SignUpState extends State<SignUp> {
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //--------------------------------
+                        _label(nameOpacity, "Name"),
+                        Container(
+                          width: getWidth(context) * 0.3,
+                          child: TextFormField(
+                            controller: nameController,
+                            style: _inputText(),
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                hintStyle: _hintText(),
+                                hintText: "Name"),
+                            onChanged: (value) {
+                              setState(() {
+                                value != '' ? passOpacity = 1 : passOpacity = 0;
+                              });
+                            },
+                            onFieldSubmitted: (value) {
+                              _callOnTop();
+                            },
+                            //300
+                          ),
+                        ),
+                        SizedBox(height: height * 0.011),
                         _label(emailOpacity, "Email"),
                         Container(
                           width: getWidth(context) * 0.3,
@@ -167,6 +194,9 @@ class _SignUpState extends State<SignUp> {
                             //300
                           ),
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         DropdownButton(
                           value: dropdownvalueite,
 
@@ -184,9 +214,8 @@ class _SignUpState extends State<SignUp> {
                             setState(() {
                               dropdownvalueite = newvalue!;
                               position = dropdownvalueite;
-                            
                             });
-                              hierarchy(dropdownvalueite);
+                            hierarchy(dropdownvalueite);
                           },
                         ),
                       ],
@@ -196,6 +225,7 @@ class _SignUpState extends State<SignUp> {
                     height: 30,
                   ),
                   [
+                    nameOpacity,
                     emailOpacity,
                     passOpacity,
                   ].every((element) => element == 1.0)
@@ -239,10 +269,13 @@ class _SignUpState extends State<SignUp> {
                                                 builder: (context) => Home(),
                                               ));
                                       Map<String, dynamic> user = {
-                                        "position":position,
+                                        "position": position,
                                         'role': role,
                                         'email': email.text,
-                                        'password': password.text
+                                        'password': password.text,
+                                        'name': nameController,
+                                        'uid': FirebaseAuth
+                                            .instance.currentUser!.uid
                                       };
                                       await FirebaseFirestore.instance
                                           .collection('Users')

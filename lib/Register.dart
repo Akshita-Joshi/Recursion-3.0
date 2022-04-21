@@ -157,7 +157,7 @@ class _RegisterState extends State<Register> {
                   repeatForever: true,
                   onTap: () {
                    
-                      addUserData();
+                      //addUserData();
                 
                     Fluttertoast.showToast(
                         msg: 'Registered Successfully',

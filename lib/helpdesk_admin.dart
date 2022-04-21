@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:recursionhelpdesksystem/authenticate.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
 import 'package:recursionhelpdesksystem/screens/accounts.dart';
 import 'package:recursionhelpdesksystem/screens/history.dart';
@@ -177,7 +178,7 @@ class _HelpDeskAdminState extends State<HelpDeskAdmin> {
                                       )),
                                 ),
                                 Container(
-                                  width: getWidth(context) * 0.1,
+                                  width: getWidth(context) * 0.08,
                                   child: Text(
                                     'Durgesh Kudalkar',
                                     style: TextStyle(
@@ -186,7 +187,12 @@ class _HelpDeskAdminState extends State<HelpDeskAdmin> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                )
+                                ),
+                                InkWell(
+                                    onTap: () {
+                                      logOut(context);
+                                    },
+                                    child: Icon(Iconsax.logout_1))
                               ],
                             ),
                           ),

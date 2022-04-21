@@ -3,12 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recursionhelpdesksystem/EmployeeAndHelpDesk.dart';
+import 'package:recursionhelpdesksystem/Welcome.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
 // import 'package:virya/firebase.dart';
 // import 'package:virya/globals.dart';
 // import 'package:virya/welcomeandother.dart';
-
-
 
 Future<User?> createAccount(String email, String password) async {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -60,7 +59,7 @@ Future logOut(BuildContext context) async {
     await _auth.signOut().then((value) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => EmployeeAndHelpDesk()),
+        MaterialPageRoute(builder: (context) => Welcome()),
       );
     });
   } catch (e) {
@@ -72,7 +71,7 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 FirebaseAuth _auth = FirebaseAuth.instance;
 Map<String, dynamic>? userMap;
 
-void addUserData() async {
+/*void addUserData() async {
   if (nameController.text.isNotEmpty &&
       branchController.text.isNotEmpty &&
       divController.text.isNotEmpty &&
@@ -100,7 +99,7 @@ void addUserData() async {
   } else {
     print('Enter Some Text');
   }
-}
+}*/
 
 void helpdesk() async {
   if (nameControllerT.text.isNotEmpty && role!.isNotEmpty) {
@@ -109,8 +108,7 @@ void helpdesk() async {
       "name": nameControllerT.text,
       'role': "Helpdesk",
       "position": position,
-      
-      'degree':degree,
+      'degree': degree,
       'uid': _auth.currentUser!.uid
     };
 

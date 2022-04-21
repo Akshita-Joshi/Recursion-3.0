@@ -50,10 +50,6 @@ String? to;
 int? id;
 String? position;
 TextEditingController nameController = TextEditingController();
-TextEditingController yearController = TextEditingController();
-TextEditingController divController = TextEditingController();
-TextEditingController branchController = TextEditingController();
-TextEditingController rollController = TextEditingController();
 
 TextEditingController email = TextEditingController();
 TextEditingController password = TextEditingController();
