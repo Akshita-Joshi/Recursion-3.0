@@ -43,3 +43,5 @@ samples, guidance on mobile development, and a full API reference.
 
 -----------------------------
 npm install -g firebase-tools
+---------------
+<img width="510" alt="image" src="https://user-images.githubusercontent.com/65798586/164411390-fbe0164b-e1d9-471c-a154-d71a5af4fca8.png">
