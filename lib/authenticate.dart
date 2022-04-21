@@ -107,6 +107,7 @@ void helpdesk() async {
       'email': email.text,
       "name": nameControllerT.text,
       'role': "Helpdesk",
+      
       'degree':degree,
       'uid': _auth.currentUser!.uid
     };

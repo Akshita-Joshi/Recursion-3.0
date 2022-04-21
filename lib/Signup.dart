@@ -8,8 +8,8 @@ import 'package:recursionhelpdesksystem/HelpDeskLogin.dart';
 import 'package:recursionhelpdesksystem/Loader.dart';
 import 'package:recursionhelpdesksystem/Register.dart';
 import 'package:recursionhelpdesksystem/authenticate.dart';
+import 'package:recursionhelpdesksystem/backendtickets.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
-
 
 class SignUp extends StatefulWidget {
   @override
@@ -17,6 +17,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String dropdownvalueite = "Computer Science Enginner";
+  var items = [
+    "Clerk",
+    "Computer Science Enginner",
+    "Manager",
+    "Tech Lead",
+    "CEO"
+  ];
   bool isLoading = false;
   double emailOpacity = 0.0;
   double passOpacity = 0.0;
@@ -45,7 +53,7 @@ class _SignUpState extends State<SignUp> {
           text,
           style: TextStyle(
               fontFamily: "MontserratM",
-              fontSize: width! * 0.035, //14
+              fontSize: width! * 0.010, //14
               color: Colors.black.withOpacity(0.3)),
         ),
       ),
@@ -78,7 +86,7 @@ class _SignUpState extends State<SignUp> {
                 alignment: Alignment.centerLeft,
                 height: height * 0.305, //260
                 width: width,
-              
+
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: width * 0.071), //28
                   child: Column(
@@ -92,10 +100,9 @@ class _SignUpState extends State<SignUp> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                            height: height * 0.035, //30
-                            width: width * 0.076, //30
-                            
-                                ),
+                          height: height * 0.035, //30
+                          width: width * 0.076, //30
+                        ),
                       ),
                       SizedBox(
                         height: height * 0.058, //50
@@ -104,7 +111,7 @@ class _SignUpState extends State<SignUp> {
                         "Sign Up ",
                         style: TextStyle(
                           fontFamily: "MontserratB",
-                          fontSize: width * 0.112, //44
+                          fontSize: width * 0.010, //44
                           color: Colors.black,
                         ),
                       ),
@@ -169,7 +176,26 @@ class _SignUpState extends State<SignUp> {
                           _callOnTop();
                         },
                       ),
-                      SizedBox(height: height * 0.011), //10
+                      SizedBox(height: height * 0.011),
+                      DropdownButton(
+                        value: dropdownvalueite,
+
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+
+                        // Array list of items
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        onChanged: (String? newvalue) {
+                          setState(() {
+                            dropdownvalueite = newvalue!;
+                          });
+                        },
+                      ), //10
 
                       SizedBox(
                         height: height / 2 - (height * 0.35), //300
@@ -206,7 +232,13 @@ class _SignUpState extends State<SignUp> {
 
                       createAccount(email.text, password.text)
                           .then((user) async {
+                        FirebaseFirestore.instance
+                            .collection("Users")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({"position": dropdownvalueite});
+                        hierarchy(dropdownvalueite);
                         if (user != null) {
+                          //code for backend
                           setState(() {
                             isLoading = false;
                           });
