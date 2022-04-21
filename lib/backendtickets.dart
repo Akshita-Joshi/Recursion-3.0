@@ -37,6 +37,12 @@ updateTicketInfo(bool ifpermission, String id, String name, String department,
 
 hierarchy(String position) async {
   FirebaseFirestore.instance
+      .collection("Users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .update({
+        "position": position,
+      });
+  FirebaseFirestore.instance
       .collection("Hierarchy")
       .doc(position)
       .collection("list")
@@ -48,8 +54,9 @@ hierarchy(String position) async {
   var number = FirebaseFirestore.instance
       .collection("Hierarchy")
       .doc(position)
+      .collection("list")
       .get()
       .then((value) {
-    print(value.data()!.length);
+    print(value.docs.length);
   });
 }

@@ -1,6 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth_web/firebase_auth_web.dart';
+
+Color? primary = Color(0xFF0CED7F);
+Color? secondary = Color(0xFF06371F);
+
+double getHeight(context) {
+  double height = MediaQuery.of(context).size.height;
+  return height;
+}
+
+double getWidth(context) {
+  double width = MediaQuery.of(context).size.width;
+  return width;
+}
 
 //this file contains all the global variables
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -36,7 +48,7 @@ String? docId;
 const String? meetlink = "https://meet.google.com/wax-ncmq-eim";
 String? to;
 int? id;
-
+String? position;
 TextEditingController nameController = TextEditingController();
 TextEditingController yearController = TextEditingController();
 TextEditingController divController = TextEditingController();

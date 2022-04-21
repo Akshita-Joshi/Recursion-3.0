@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
-import 'package:recursionhelpdesksystem/HelpDeskScreen.dart';
+import 'package:recursionhelpdesksystem/screens/home.dart';
 import 'Loader.dart';
 import 'authenticate.dart';
 import 'Firebase.dart';
-import 'home.dart';
 import 'globals.dart';
+
 var currentName;
 
 class Login extends StatefulWidget {
@@ -28,15 +28,15 @@ class _LoginState extends State<Login> {
 
   static TextStyle _hintText() {
     return TextStyle(
-        fontFamily: "MontserratM",
-        fontSize: width! * 0.061, //24
+        fontFamily: "Medium",
+        fontSize: 24, //24
         color: Colors.black.withOpacity(0.3));
   }
 
   static TextStyle _inputText() {
     return TextStyle(
-        fontFamily: "MontserratM",
-        fontSize: width! * 0.061, //24
+        fontFamily: "Medium",
+        fontSize: 24, //24
         color: Colors.black);
   }
 
@@ -49,8 +49,8 @@ class _LoginState extends State<Login> {
         child: Text(
           text,
           style: TextStyle(
-              fontFamily: "MontserratM",
-              fontSize: width! * 0.005, //14
+              fontFamily: "Medium",
+              fontSize: 14, //14
               color: Colors.black.withOpacity(0.3)),
         ),
       ),
@@ -71,234 +71,226 @@ class _LoginState extends State<Login> {
     return Scaffold(
       //resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Stack(alignment: Alignment.center, children: [
-            Container(
-              height: height,
-              width: width,
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: height * 0.100, //260
-                   
-                    // decoration: BoxDecoration(
-                    //     image: DecorationImage(
-                    //         colorFilter: ColorFilter.mode(
-                    //             Colors.white.withOpacity(0.9), BlendMode.srcOver),
-                    //         fit: BoxFit.fitWidth,
-                  
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: height * 0.100), //56
-                        InkWell(
-                          customBorder: new CircleBorder(),
-                          splashColor: Colors.black.withOpacity(0.2),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                              height: height * 0.035, //30
-                              width: width * 0.076, //30
-                              child: Center(
-                                  child: Icon(Icons.arrow_back))),
-                        ),
-                        SizedBox(
-                          height: height * 0.058, //50
-                        ),
-                        Text(
-                          "Login ",
-                          style: TextStyle(
-                            fontFamily: "MontserratB",
-                            fontSize: width * 0.02, //44
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
+      body: Center(
+        child: Container(
+          width: getWidth(context) * 0.4,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.grey.shade100),
+          child: Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 30), //56
+                /*InkWell(
+                  customBorder: new CircleBorder(),
+                  splashColor: Colors.black.withOpacity(0.2),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                      height: height * 0.035, //30
+                      width: width * 0.076, //30
+                      child: Center(child: Icon(Icons.arrow_back))),
+                ),*/
+                /*SizedBox(
+                  height: height * 0.058, //50
+                ),*/
+                Text(
+                  "Login ",
+                  style: TextStyle(
+                    fontFamily: "Bold",
+                    fontSize: 44, //44
+                    color: Colors.black,
                   ),
-                  SizedBox(height: height * 0.058), //50
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.071), //28
-                      child: ListView(
-                        controller: _scrollController,
-                        physics: BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        //mainAxisSize: MainAxisSize.min,
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //field1("Email", _email),
-                          //--------------------------------
-                          _label(
-                            emailOpacity,
-                            "Email",
-                          ),
-                          TextFormField(
-                            controller: _email,
-                            style: _inputText(),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              hintStyle: _hintText(),
-                              hintText: "Email",
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                value != '' ? emailOpacity = 1 : emailOpacity = 0;
-                              });
-                            },
-                            onFieldSubmitted: (value) {
-                              _callOnTop();
-                            },
-                          ),
-                          SizedBox(height: height * 0.011), //10
-                          //field2("Password", _password),
-                          //--------------------------------
-                          _label(passOpacity, "Password"),
-                          TextFormField(
-                            controller: _password,
-                            obscureText: true,
-                            style: _inputText(),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintStyle: _hintText(),
-                                hintText: "Password"),
-                            onChanged: (value) {
-                              setState(() {
-                                value != '' ? passOpacity = 1 : passOpacity = 0;
-                              });
-                            },
-                            onFieldSubmitted: (value) {
-                              _callOnTop();
-                            },
-                          ),
-                          SizedBox(height: height * 0.011), //10
-                  
-                          SizedBox(
-                            height: height / 2 - (height * 0.35), //300
-                          )
-                        ],
+                ),
+                SizedBox(height: 50), //50
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.071), //28
+                  child: ListView(
+                    controller: _scrollController,
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    //mainAxisSize: MainAxisSize.min,
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //field1("Email", _email),
+                      //--------------------------------
+                      _label(
+                        emailOpacity,
+                        "Email",
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              right: width * 0.254, //100
-              bottom: height * 0.07, //60
-              child: (_email.text.isNotEmpty && _password.text.isNotEmpty)
-                  ? AnimatedTextKit(
-                      pause: Duration(milliseconds: 1500),
-                      repeatForever: true,
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => Loader(
-                                      message:
-                                          'Please wait while we \nlog you in..',
-                                    )));
-                        if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
-                          logIn(_email.text, _password.text).then((user) async {
-                            if (user != null) {
-                              getUser();
-                              var userMap;
-                              var teacherMap;
-                              role == 'Employee'
-                                  ? await FirebaseFirestore.instance
-                                      .collection("Users")
-                                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                                      .get()
-                                      .then((value) {
-                                      print(value.data());
-                                      print(value.data()!['name']);
-                                      currentUser = value.data()!['name'];
-                                      setState(() {
-                                        userMap = value.data()!;
-                                        currentName = value.get('name');
-                                      });
-                                    })
-                                  : await FirebaseFirestore.instance
-                                      .collection("Users")
-                                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                                      .get()
-                                      .then((value) {
-                                      print(value.data());
-                                      print(value.data()!['name']);
-                                      currentUser = value.data()!['name'];
-                                      setState(() {
-                                        teacherMap = value.data()!;
-                                        //currentName = value.get('name');
-                                      });
-                                    });
-          
-                              print("Login Successful");
-                              Fluttertoast.showToast(
-                                  msg: 'Logged In successfully',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: grey,
-                                  textColor: Colors.black,
-                                  fontSize: 16.0);
-                              role == 'Employee'
-                                  ? Navigator.push(context,
-                                      MaterialPageRoute(builder: (_) => EmployeeScreen(),
-                                      ))
-                                  : Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => HelpDeskScreen()));
-                              setState(() {
-                                isLoading = false;
-                              });
-                            } else {
-                              print("Login Failed");
-                              Fluttertoast.showToast(
-                                  msg: 'Login Failed',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: grey,
-                                  textColor: Colors.black,
-                                  fontSize: 16.0);
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) => Login()));
-                              setState(() {
-                                isLoading = false;
-                              });
-                            }
+                      TextFormField(
+                        controller: _email,
+                        style: _inputText(),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintStyle: _hintText(),
+                          hintText: "Email",
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            value != '' ? emailOpacity = 1 : emailOpacity = 0;
                           });
-                        } else {
-                          print("Please fill form correctly");
-                        }
-                      },
-                      animatedTexts: [
-                          TyperAnimatedText(
-                            'Next →',
-                            textStyle: TextStyle(
-                              fontFamily: "MontserratSB",
-                              fontSize: width * 0.061, //24
-                              color: Colors.black,
+                        },
+                        onFieldSubmitted: (value) {
+                          _callOnTop();
+                        },
+                      ),
+                      SizedBox(height: height * 0.011), //10
+                      //field2("Password", _password),
+                      //--------------------------------
+                      _label(passOpacity, "Password"),
+                      TextFormField(
+                        controller: _password,
+                        obscureText: true,
+                        style: _inputText(),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            hintStyle: _hintText(),
+                            hintText: "Password"),
+                        onChanged: (value) {
+                          setState(() {
+                            value != '' ? passOpacity = 1 : passOpacity = 0;
+                          });
+                        },
+                        onFieldSubmitted: (value) {
+                          _callOnTop();
+                        },
+                      ),
+                      /*SizedBox(height: height * 0.011), //10
+
+                      SizedBox(
+                        height: height / 2 - (height * 0.35), //300
+                      )*/
+                    ],
+                  ),
+                ),
+                (_email.text.isNotEmpty && _password.text.isNotEmpty)
+                    ? Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Colors.grey.shade100),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Loader(
+                                            message:
+                                                'Please wait while we \nlog you in..',
+                                          )));
+                              if (_email.text.isNotEmpty &&
+                                  _password.text.isNotEmpty) {
+                                logIn(_email.text, _password.text)
+                                    .then((user) async {
+                                  if (user != null) {
+                                    getUser();
+                                    var userMap;
+                                    var teacherMap;
+                                    role == 'Employee'
+                                        ? await FirebaseFirestore.instance
+                                            .collection("Users")
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.uid)
+                                            .get()
+                                            .then((value) {
+                                            print(value.data());
+                                            print(value.data()!['name']);
+                                            currentUser = value.data()!['name'];
+                                            setState(() {
+                                              userMap = value.data()!;
+                                              currentName = value.get('name');
+                                            });
+                                          })
+                                        : await FirebaseFirestore.instance
+                                            .collection("Users")
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.uid)
+                                            .get()
+                                            .then((value) {
+                                            print(value.data());
+                                            print(value.data()!['name']);
+                                            currentUser = value.data()!['name'];
+                                            setState(() {
+                                              teacherMap = value.data()!;
+                                              //currentName = value.get('name');
+                                            });
+                                          });
+
+                                    print("Login Successful");
+                                    Fluttertoast.showToast(
+                                        msg: 'Logged In successfully',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: grey,
+                                        textColor: Colors.black,
+                                        fontSize: 16.0);
+                                    role == 'Employee'
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => EmployeeScreen(),
+                                            ))
+                                        : Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => Home()));
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  } else {
+                                    print("Login Failed");
+                                    Fluttertoast.showToast(
+                                        msg: 'Login Failed',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: grey,
+                                        textColor: Colors.black,
+                                        fontSize: 16.0);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => Login()));
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
+                                });
+                              } else {
+                                print("Please fill form correctly");
+                              }
+                            },
+                            child: Text(
+                              ' Next ',
+                              style: TextStyle(
+                                fontFamily: "Bold",
+                                fontSize: 24, //24
+                                color: Colors.white,
+                              ),
                             ),
-                          )
-                        ])
-                  : Container(),
-            )
-          ]),
+                          ),
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          ),
         ),
       ),
     );

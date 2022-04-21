@@ -5,10 +5,9 @@ import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
-import 'package:recursionhelpdesksystem/HelpDeskScreen.dart';
 import 'package:recursionhelpdesksystem/Welcome.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
-
+import 'package:recursionhelpdesksystem/screens/home.dart';
 
 class SplashScreen extends StatefulWidget {
   final Color backgroundColor = Colors.white;
@@ -30,56 +29,59 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _loadWidget() async {
-    if (FirebaseAuthWeb.instance.currentUser != null)  {
-      try{
-      await FirebaseFirestore.instance.collection("Users")
-      .doc(FirebaseAuthWeb.instance.currentUser!.uid)
-      .get().then((value) async{
-        setState(() {
-          role = value.get('role');
-          userMap = value.data();
-          currentName = value.get('name');
-        });
-  
-      });
-    }catch(e){
-      try{
-        await FirebaseFirestore.instance.collection("HelpDesk")
-        .doc(FirebaseAuthWeb.instance.currentUser!.uid).get().then((value) {
+    if (FirebaseAuthWeb.instance.currentUser != null) {
+      try {
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(FirebaseAuthWeb.instance.currentUser!.uid)
+            .get()
+            .then((value) async {
           setState(() {
-            role = value.get("role");
+            role = value.get('role');
             userMap = value.data();
+            currentName = value.get('name');
           });
         });
-
+      } catch (e) {
+        try {
+          await FirebaseFirestore.instance
+              .collection("HelpDesk")
+              .doc(FirebaseAuthWeb.instance.currentUser!.uid)
+              .get()
+              .then((value) {
+            setState(() {
+              role = value.get("role");
+              userMap = value.data();
+            });
+          });
+        } catch (e) {
+          print("Error loading user");
+        }
       }
-      catch(e){
-        print("Error loading user");
-      }
-    }
-     var _duration = Duration(seconds: splashDelay);
+      var _duration = Duration(seconds: splashDelay);
       return Timer(_duration, navigationPageloggedIn);
     } else {
       var _duration = Duration(seconds: splashDelay);
       return Timer(_duration, navigationPage);
     }
   }
+
   void navigationPage() {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => Welcome()));
   }
-   void navigationPageloggedIn() {
+
+  void navigationPageloggedIn() {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) {
       if (role == 'employee') {
         return EmployeeScreen();
       } else {
-        return HelpDeskScreen();
+        return Home();
       }
     }));
   }
 
- 
   @override
   Widget build(BuildContext context) {
     media(context);
@@ -100,7 +102,6 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                       ),
@@ -125,7 +126,6 @@ class _SplashScreenState extends State<SplashScreen> {
                       Container(
                         height: 10,
                       ),
-                     
                     ],
                   ),
                 ),
@@ -137,5 +137,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-

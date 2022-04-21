@@ -5,8 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recursionhelpdesksystem/EmployeeAndHelpDesk.dart';
 import 'globals.dart';
 
-
-
 //this file has the welcome screen and the student or teacher screen
 class Welcome extends StatefulWidget {
   @override
@@ -25,14 +23,27 @@ class _WelcomeState extends State<Welcome> {
       body: SafeArea(
           child: Stack(
         children: [
-         
           Positioned(
             bottom: height * 0.07, //60
             child: Padding(
-              padding: EdgeInsets.only(top: height * 0.10, left: height*0.8, bottom: height*0.2), //28
+              padding: EdgeInsets.only(
+                  top: height * 0.10,
+                  left: height * 0.8,
+                  bottom: height * 0.2), //28
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text(
+                    'HelpDesk',
+                    style: TextStyle(
+                      fontFamily: "ExtraBold",
+                      fontSize: 40,
+                      color: Colors.black.withOpacity(0.8),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.2, //30
+                  ),
                   InkWell(
                     onTap: () {
                       setState(() {
@@ -47,18 +58,20 @@ class _WelcomeState extends State<Welcome> {
                     },
                     child: Container(
                       //this is the get started button
-                      height: height * 0.090, //50
-                      width: width *0.08, //56
+
                       decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10)),
+                          color: primary,
+                          borderRadius: BorderRadius.circular(100)),
                       child: Center(
-                        child: Text(
-                          "Get Started",
-                          style: TextStyle(
-                            fontFamily: "MontserratSB",
-                            fontSize: width * 0.015, //20
-                            color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Text(
+                            "Get Started",
+                            style: TextStyle(
+                              fontFamily: "Bold",
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -73,9 +86,9 @@ class _WelcomeState extends State<Welcome> {
                       Text(
                         'Already a member?  ',
                         style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontSize: width * 0.015, //18
-                          color: Colors.black,
+                          fontFamily: "Medium",
+                          fontSize: 18,
+                          color: Colors.black.withOpacity(0.6),
                         ),
                       ),
                       InkWell(
@@ -93,8 +106,8 @@ class _WelcomeState extends State<Welcome> {
                           'Login',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
-                            fontFamily: "MontserratB",
-                            fontSize: width * 0.015, //20
+                            fontFamily: "SemiBold",
+                            fontSize: 20,
                             color: Colors.black,
                           ),
                         ),
