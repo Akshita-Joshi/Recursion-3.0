@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
 import 'package:recursionhelpdesksystem/HelpDeskScreen.dart';
 import 'package:recursionhelpdesksystem/Welcome.dart';
@@ -99,12 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      // Container(
-                      //     height: height * 0.07, //60
-                      //     child: 
-                      //     // Center(
-                      //     //     child: SvgPicture.asset('assets/logo.svg'))
-                      //         ),
+                      
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                       ),

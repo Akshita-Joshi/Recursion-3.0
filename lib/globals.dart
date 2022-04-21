@@ -6,6 +6,7 @@ import 'package:firebase_auth_web/firebase_auth_web.dart';
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 var currentName;
 var currentYear;
+
 class Drawerclass {
   static bool showMenu = false;
 }
@@ -51,5 +52,5 @@ TextEditingController syControllerT = TextEditingController();
 TextEditingController tyControllerT = TextEditingController();
 TextEditingController btechControllerT = TextEditingController();
 TextEditingController seqControllerT = TextEditingController();
-
+int? degree;
 String? currentUser;
