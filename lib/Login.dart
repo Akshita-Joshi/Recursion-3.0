@@ -217,6 +217,8 @@ class _LoginState extends State<Login> {
                                             setState(() {
                                               userMap = value.data()!;
                                               currentName = value.get('name');
+                                              heirarchy =
+                                                  value.data()!['position'];
                                             });
                                           })
                                         : await FirebaseFirestore.instance
@@ -228,6 +230,8 @@ class _LoginState extends State<Login> {
                                             print(value.data());
                                             print(value.data()!['name']);
                                             currentUser = value.data()!['name'];
+                                            heirarchy =
+                                                value.data()!['position'];
                                             setState(() {
                                               teacherMap = value.data()!;
                                               //currentName = value.get('name');

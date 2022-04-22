@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:recursionhelpdesksystem/globals.dart';
 import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/splashscreen.dart';
 
@@ -24,11 +25,7 @@ class MyApp extends StatelessWidget {
         title: "HelpDesk",
         builder: (BuildContext context, Widget? widget) {
           ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
-            return Center(
-              child: Container(
-                child: Text("Loading..."),
-              ),
-            );
+            return Center(child: Container());
           };
           return widget!;
         },

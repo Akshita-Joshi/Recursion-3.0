@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
@@ -12,9 +13,13 @@ class Ticket extends StatefulWidget {
   String? status;
   String? dept;
   bool? priority;
+  String? hierarchy;
+  String? docid;
 
   Ticket(
       {this.name,
+      this.hierarchy,
+      this.docid,
       this.email,
       this.subject,
       this.message,
@@ -153,20 +158,29 @@ class _TicketState extends State<Ticket> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: primary,
-                                        borderRadius:
-                                            BorderRadius.circular(100)),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(18.0),
-                                        child: Text(
-                                          "Mark as solved",
-                                          style: TextStyle(
-                                            fontFamily: "Bold",
-                                            fontSize: 20,
-                                            color: Colors.white,
+                                  InkWell(
+                                    onTap: () {
+                                      FirebaseFirestore.instance
+                                          .collection('Tickets')
+                                          .doc(widget.docid)
+                                          .update({'status': 'solved'});
+                                      Navigator.pop(context);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: primary,
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(18.0),
+                                          child: Text(
+                                            "Mark as solved",
+                                            style: TextStyle(
+                                              fontFamily: "Bold",
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -175,25 +189,50 @@ class _TicketState extends State<Ticket> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.8),
-                                        borderRadius:
-                                            BorderRadius.circular(100)),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(18.0),
-                                        child: Text(
-                                          "Transfer to next level",
-                                          style: TextStyle(
-                                            fontFamily: "Bold",
-                                            fontSize: 20,
-                                            color: Colors.white,
+                                  widget.hierarchy != 'Team Lead'
+                                      ? InkWell(
+                                          onTap: () {
+                                            if (widget.hierarchy == 'Clerk') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Tickets')
+                                                  .doc(widget.docid)
+                                                  .update(
+                                                      {'hierarchy': 'Manager'});
+                                            }
+                                            if (widget.hierarchy == 'Manager') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Tickets')
+                                                  .doc(widget.docid)
+                                                  .update({
+                                                'hierarchy': 'Team Lead'
+                                              });
+                                            }
+
+                                            Navigator.pop(context);
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                                borderRadius:
+                                                    BorderRadius.circular(100)),
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(18.0),
+                                                child: Text(
+                                                  "Transfer to next level",
+                                                  style: TextStyle(
+                                                    fontFamily: "Bold",
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),

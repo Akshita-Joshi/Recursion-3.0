@@ -41,6 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
             .then((value) async {
           setState(() {
             role = value.get('role');
+            heirarchy = value.get('position');
             userMap = value.data();
             currentName = value.get('name');
           });

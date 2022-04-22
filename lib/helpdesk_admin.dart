@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recursionhelpdesksystem/authenticate.dart';
@@ -151,6 +152,9 @@ class _HelpDeskAdminState extends State<HelpDeskAdmin> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Positioned(
                       bottom: 10,
                       child: Padding(
@@ -180,7 +184,8 @@ class _HelpDeskAdminState extends State<HelpDeskAdmin> {
                                 Container(
                                   width: getWidth(context) * 0.08,
                                   child: Text(
-                                    'Durgesh Kudalkar',
+                                    FirebaseAuth
+                                        .instance.currentUser!.displayName!,
                                     style: TextStyle(
                                       fontFamily: 'Bold',
                                       fontSize: 12,

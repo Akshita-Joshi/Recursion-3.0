@@ -231,6 +231,7 @@ class _SignUpState extends State<SignUp> {
                             setState(() {
                               var dropdownvalueite = newvalue!;
                               position = dropdownvalueite;
+                              heirarchy = position;
                             });
                             //hierarchy(dropdownvalueite);
                           },

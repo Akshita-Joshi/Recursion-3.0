@@ -18,7 +18,8 @@ sendTicketInfo(String id, String name, String department, String subject,
     "time": time,
     'profile': null,
     'attachment': null,
-    'hierarchy': 'Clerk'
+    'hierarchy': 'Clerk',
+    'timestamp': FieldValue.serverTimestamp()
   };
   FirebaseFirestore.instance.collection("Tickets").add(ticketsinfo);
 }

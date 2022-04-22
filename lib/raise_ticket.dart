@@ -13,6 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:recursionhelpdesksystem/backendticket.dart';
 import 'package:recursionhelpdesksystem/controllers.dart';
 import 'package:recursionhelpdesksystem/filepixk.dart';
+import 'package:recursionhelpdesksystem/globals.dart';
 import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/main.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
@@ -26,22 +27,27 @@ class Tickets extends StatefulWidget {
 
 class _TicketsState extends State<Tickets> {
   final _formKey = GlobalKey<FormState>();
-  String dropdownValue = "Ask for Quote";
+  String dropdownValue = "HR Department";
   String dropdownValue1 = "Low";
   bool priority = false;
+  bool raised = false;
   final TextEditingController _email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Padding(
+            child: raised
+                ? Center(
+                    child: Raised(),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          /*Padding(
                   padding: const EdgeInsets.fromLTRB(60, 80, 0, 0),
                   child: RichText(
                     text: const TextSpan(
@@ -53,63 +59,68 @@ class _TicketsState extends State<Tickets> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Container(
-              width: 800,
-              padding: EdgeInsets.symmetric(
-                vertical: 80.0,
-                horizontal: 60.0,
-              ),
-              child: _buildForm(),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0, bottom: 0.0),
-              child: Container(
-                alignment: Alignment(0.75, 0.5),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await sendTicketInfo(
-                        "1",
-                        Name.text,
-                        dropdownValue.toString(),
-                        Subject.text,
-                        priority,
-                        //dropdownValue1.toString(),
-                        _email.text,
-                        time.text);
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.push(context,
+                ),*/
+                        ],
+                      ),
+                      Container(
+                        width: 800,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 80.0,
+                          horizontal: 60.0,
+                        ),
+                        child: _buildForm(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
+                        child: Container(
+                          alignment: Alignment(0.75, 0.5),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await sendTicketInfo(
+                                  "1",
+                                  Name.text,
+                                  dropdownValue.toString(),
+                                  Subject.text,
+                                  priority,
+                                  //dropdownValue1.toString(),
+                                  _email.text,
+                                  time.text);
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  raised = true;
+                                });
+                                /*Navigator.push(context,
                           MaterialPageRoute(builder: (_) => HelpDeskAdmin()));
-                      print('All validations passed!');
-                    }
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      "Next",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'ProductSansBold',
+                      print('All validations passed!');*/
+
+                              }
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(13.0),
+                              child: Text(
+                                "Next",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Bold',
+                                ),
+                              ),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromARGB(200, 0, 0, 0),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(68.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 180, 180, 180),
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )));
+                    ],
+                  )));
   }
 
   Form _buildForm() {
@@ -123,7 +134,7 @@ class _TicketsState extends State<Tickets> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
 //Department
-              Column(
+              /*Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -138,37 +149,11 @@ class _TicketsState extends State<Tickets> {
                           )),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton<String>(
-                      value: dropdownValue,
-                      elevation: 16,
-                      dropdownColor: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(18.0),
-                      style:
-                          const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue = newValue!;
-                        });
-                      },
-                      items: <String>[
-                        'Support Department',
-                        'Ask for Quote',
-                        'Improvements Department'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
                 ],
-              ),
-              SizedBox(
+              ),*/
+              /*SizedBox(
                 height: height * 0.02,
-              ),
+              ),*/
               Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -217,6 +202,49 @@ class _TicketsState extends State<Tickets> {
                     ],
                   )
                 ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      color: Colors.grey.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: DropdownButton<String>(
+                      underline: Container(),
+                      value: dropdownValue,
+                      elevation: 16,
+                      dropdownColor: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(18.0),
+                      style:
+                          const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue = newValue!;
+                        });
+                      },
+                      items: <String>[
+                        'HR Department',
+                        'Admin',
+                        'Improvements Department'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                              fontFamily: 'SemiBold',
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
               ),
 
 //Name
@@ -331,9 +359,17 @@ class _TicketsState extends State<Tickets> {
               ),*/
 
 //Subject
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  style: TextStyle(
+                    fontFamily: "SemiBold",
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
                   keyboardType: TextInputType.text,
                   controller: Subject,
                   validator: (String? value) {
@@ -349,33 +385,33 @@ class _TicketsState extends State<Tickets> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     filled: true,
-                    fillColor: Colors.grey[300],
+                    fillColor: Colors.transparent,
                     suffixIcon: const Padding(
                       padding: EdgeInsets.only(bottom: 25.0),
                     ),
                     labelText: "Subject",
                     labelStyle: TextStyle(
-                      fontFamily: "ProductSans",
+                      fontFamily: "SemiBold",
                       fontSize: 16,
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -388,6 +424,11 @@ class _TicketsState extends State<Tickets> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  style: TextStyle(
+                    fontFamily: "SemiBold",
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
                   keyboardType: TextInputType.text,
                   controller: Message,
                   validator: (String? value) {
@@ -403,33 +444,33 @@ class _TicketsState extends State<Tickets> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18),
                       borderSide:
-                          BorderSide(width: 10.0, color: Colors.grey.shade300),
+                          BorderSide(width: 10.0, color: Colors.transparent),
                     ),
                     filled: true,
-                    fillColor: Colors.grey[300],
+                    fillColor: Colors.transparent,
                     suffixIcon: const Padding(
                       padding: EdgeInsets.only(bottom: 25.0),
                     ),
-                    labelText: "message",
+                    labelText: "Message",
                     labelStyle: TextStyle(
-                      fontFamily: "ProductSans",
+                      fontFamily: "SemiBold",
                       fontSize: 16,
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -655,6 +696,52 @@ class _TicketsState extends State<Tickets> {
               ),
             ]),
       ),
+    );
+  }
+}
+
+class Raised extends StatefulWidget {
+  const Raised({Key? key}) : super(key: key);
+
+  @override
+  State<Raised> createState() => _RaisedState();
+}
+
+class _RaisedState extends State<Raised> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: 64,
+          width: 64,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border:
+                  Border.all(color: Colors.grey.withOpacity(0.5), width: 1)),
+          child: Transform.scale(
+            scale: 0.9,
+            child: Checkbox(
+              side: BorderSide.none,
+              checkColor: Colors.black.withOpacity(0.8),
+              shape: CircleBorder(),
+              activeColor: Colors.black.withOpacity(0.8),
+              value: true,
+              onChanged: (bool? value) {},
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Container(
+          width: getWidth(context) * 0.3,
+          child: Text(
+            'You ticket has been raised',
+            style: TextStyle(fontFamily: 'Bold', fontSize: 30),
+          ),
+        )
+      ],
     );
   }
 }
