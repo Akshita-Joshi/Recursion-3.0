@@ -43,24 +43,63 @@ class _HomeState extends State<Home> {
                 final day2 = DateTime.now();
                 final difference = daysBetween(day1, day2);
                 print('datetime--${difference}');
-                if (heirarchy == map['hierarchy'] &&
-                    map['status'] == 'unsolved') {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 18.0),
-                    child: Ticket(
-                      docid: snapshot.data!.docs[i].id,
-                      name: map['name'],
-                      hierarchy: map['hierarchy'],
-                      profile: map['profile'],
-                      status: map['status'],
-                      email: map['email'],
-                      message: map['message'],
-                      priority: map['priority'],
-                      subject: map['subject'],
-                      attachment: map['attachment'],
-                      //time: map['time'],
-                    ),
-                  );
+                if (map['status'] == 'unsolved') {
+                  if (difference < 2 && heirarchy == 'Clerk') {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Ticket(
+                        docid: snapshot.data!.docs[i].id,
+                        name: map['name'],
+                        hierarchy: map['hierarchy'],
+                        profile: map['profile'],
+                        status: map['status'],
+                        email: map['email'],
+                        message: map['message'],
+                        priority: map['priority'],
+                        subject: map['subject'],
+                        attachment: map['attachment'],
+                        //time: map['time'],
+                      ),
+                    );
+                  } else if ((difference > 2 && difference < 4) &&
+                      heirarchy == 'Manager') {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Ticket(
+                        docid: snapshot.data!.docs[i].id,
+                        name: map['name'],
+                        hierarchy: map['hierarchy'],
+                        profile: map['profile'],
+                        status: map['status'],
+                        email: map['email'],
+                        message: map['message'],
+                        priority: map['priority'],
+                        subject: map['subject'],
+                        attachment: map['attachment'],
+                        //time: map['time'],
+                      ),
+                    );
+                  } else if ((difference > 4 && difference < 6) &&
+                      heirarchy == 'Team Lead') {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Ticket(
+                        docid: snapshot.data!.docs[i].id,
+                        name: map['name'],
+                        hierarchy: map['hierarchy'],
+                        profile: map['profile'],
+                        status: map['status'],
+                        email: map['email'],
+                        message: map['message'],
+                        priority: map['priority'],
+                        subject: map['subject'],
+                        attachment: map['attachment'],
+                        //time: map['time'],
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
                 } else {
                   return Container();
                 }
