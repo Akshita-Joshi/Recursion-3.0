@@ -33,82 +33,83 @@ class _TicketsState extends State<Tickets> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
             child: Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(60, 80, 0, 0),
+                  child: RichText(
+                    text: const TextSpan(
+                      text: "Ticket",
+                      style: TextStyle(
+                        fontFamily: 'Bold',
+                        fontSize: 36,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              width: 800,
+              padding: EdgeInsets.symmetric(
+                vertical: 80.0,
+                horizontal: 60.0,
+              ),
+              child: _buildForm(),
+            ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(60, 80, 0, 0),
-              child: RichText(
-                text: const TextSpan(
-                  text: "Ticket",
-                  style: TextStyle(
-                    fontFamily: 'Bold',
-                    fontSize: 36,
-                    color: Color.fromARGB(255, 0, 0, 0),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 0.0),
+              child: Container(
+                alignment: Alignment(0.75, 0.5),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await sendTicketInfo(
+                        "1",
+                        Name.text,
+                        dropdownValue.toString(),
+                        Subject.text,
+                        priority,
+                        //dropdownValue1.toString(),
+                        _email.text,
+                        time.text);
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => HelpDeskAdmin()));
+                      print('All validations passed!');
+                    }
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      "Next",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'ProductSansBold',
+                      ),
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 180, 180, 180),
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ],
-        ),
-        Container(
-          width: 800,
-          padding: EdgeInsets.symmetric(
-            vertical: 80.0,
-            horizontal: 60.0,
-          ),
-          child: _buildForm(),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 5.0, bottom: 0.0),
-          child: Container(
-            alignment: Alignment(0.75, 0.5),
-            child: ElevatedButton(
-              onPressed: () async {
-                await sendTicketInfo(
-                    "1",
-                    Name.text,
-                    dropdownValue.toString(),
-                    Subject.text,
-                    priority,
-                    //dropdownValue1.toString(),
-                    _email.text,
-                    time.text);
-                if (_formKey.currentState!.validate()) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => HelpDeskAdmin()));
-                  print('All validations passed!');
-                }
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'ProductSansBold',
-                  ),
-                ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  const Color.fromARGB(255, 180, 180, 180),
-                ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    )));
+        )));
   }
 
   Form _buildForm() {

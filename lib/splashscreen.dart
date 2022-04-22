@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
 import 'package:recursionhelpdesksystem/Welcome.dart';
+import 'package:recursionhelpdesksystem/dashboard.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
 import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/raise_ticket.dart';
@@ -77,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) {
       if (role == 'Employee') {
-        return Tickets();
+        return EmployeeScreen();
       } else {
         return HelpDeskAdmin();
       }

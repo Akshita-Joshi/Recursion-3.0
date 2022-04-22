@@ -4,11 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
 import 'package:recursionhelpdesksystem/HelpDeskLogin.dart';
 import 'package:recursionhelpdesksystem/Loader.dart';
 import 'package:recursionhelpdesksystem/Register.dart';
 import 'package:recursionhelpdesksystem/authenticate.dart';
 import 'package:recursionhelpdesksystem/backendtickets.dart';
+import 'package:recursionhelpdesksystem/dashboard.dart';
 import 'package:recursionhelpdesksystem/globals.dart';
 import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
@@ -20,7 +22,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String dropdownvalueite = "Computer Science Enginner";
+  String position = "Computer Science Enginner";
+
   var items = [
     "Clerk",
     "Computer Science Enginner",
@@ -68,6 +71,18 @@ class _SignUpState extends State<SignUp> {
   void _callOnTop() {
     _scrollController.animateTo(_scrollController.position.minScrollExtent,
         duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (role == 'Helpdesk') {
+      setState(() {
+        position = 'Clerk';
+        items = ['Clerk', 'Manager', 'Team Lead'];
+      });
+    }
   }
 
   @override
@@ -200,7 +215,7 @@ class _SignUpState extends State<SignUp> {
                           height: 20,
                         ),
                         DropdownButton(
-                          value: dropdownvalueite,
+                          value: position,
 
                           // Down Arrow Icon
                           icon: const Icon(Icons.keyboard_arrow_down),
@@ -214,7 +229,7 @@ class _SignUpState extends State<SignUp> {
                           }).toList(),
                           onChanged: (String? newvalue) {
                             setState(() {
-                              dropdownvalueite = newvalue!;
+                              var dropdownvalueite = newvalue!;
                               position = dropdownvalueite;
                             });
                             //hierarchy(dropdownvalueite);
@@ -265,7 +280,8 @@ class _SignUpState extends State<SignUp> {
                                           ? Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => Tickets(),
+                                                builder: (context) =>
+                                                    EmployeeScreen(),
                                               ))
                                           : Navigator.push(
                                               context,

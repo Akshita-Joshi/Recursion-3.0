@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recursionhelpdesksystem/EmployeeScreen.dart';
+import 'package:recursionhelpdesksystem/dashboard.dart';
 import 'package:recursionhelpdesksystem/helpdesk_admin.dart';
 import 'package:recursionhelpdesksystem/raise_ticket.dart';
 import 'package:recursionhelpdesksystem/screens/home.dart';
@@ -246,7 +247,7 @@ class _LoginState extends State<Login> {
                                         ? Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (_) => Tickets(),
+                                              builder: (_) => EmployeeScreen(),
                                             ))
                                         : Navigator.push(
                                             context,
