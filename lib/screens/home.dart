@@ -43,8 +43,25 @@ class _HomeState extends State<Home> {
                 final day2 = DateTime.now();
                 final difference = daysBetween(day1, day2);
                 print('datetime--${difference}');
-                if (map['status'] == 'unsolved') {
-                  if (difference < 2 && heirarchy == 'Clerk') {
+                if (map['hierarchy'] == heirarchy &&
+                    map['status'] == 'unsolved') {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 18.0),
+                    child: Ticket(
+                      docid: snapshot.data!.docs[i].id,
+                      name: map['name'],
+                      hierarchy: map['hierarchy'],
+                      profile: map['profile'],
+                      status: map['status'],
+                      email: map['email'],
+                      message: map['message'],
+                      priority: map['priority'],
+                      subject: map['subject'],
+                      attachment: map['attachment'],
+                      //time: map['time'],
+                    ),
+                  );
+                  /*if (difference < 2 && heirarchy == 'Clerk') {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 18.0),
                       child: Ticket(
@@ -99,7 +116,7 @@ class _HomeState extends State<Home> {
                     );
                   } else {
                     return Container();
-                  }
+                  }*/
                 } else {
                   return Container();
                 }
